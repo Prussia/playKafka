@@ -1,7 +1,13 @@
 # play[Kafka](http://kafka.apache.org/)
 
 
-## First a few concepts
+## A few concepts
 - Kafka is run as a cluster on one or more servers.
 - The Kafka cluster stores streams of records in categories called topics.
 - Each record consists of a key, a value, and a timestamp.
+
+## Four core APIs
+- The [Producer API](http://kafka.apache.org/documentation.html#producerapi) allows an application to publish a stream of records to one or more Kafka topics.
+- The [Consumer API](http://kafka.apache.org/documentation.html#consumerapi) allows an application to subscribe to one or more topics and process the stream of records produced to them.
+- The [Streams API](http://kafka.apache.org/documentation/streams) allows an application to act as a stream processor, consuming an input stream from one or more topics and producing an output stream to one or more output topics, effectively transforming the input streams to output streams.
+- The [Connector API](http://kafka.apache.org/documentation.html#connect) allows building and running reusable producers or consumers that connect Kafka topics to existing applications or data systems. For example, a connector to a relational database might capture every change to a table.
