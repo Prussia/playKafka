@@ -1,6 +1,6 @@
 # play[Kafka](http://kafka.apache.org/)
 
-
+## [Kafka入门教程](http://blog.csdn.net/hmsiwtv/article/details/46960053)
 ## A few concepts
 - Kafka is run as a cluster on one or more servers.
 - The Kafka cluster stores streams of records in categories called topics.
