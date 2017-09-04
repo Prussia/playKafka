@@ -17,6 +17,7 @@
 
 ```
 ./kafka-run-class kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic helloworld --time -1
+| while IFS=: read topic_name partition_id number; do echo "$number"; done
 
 
 ./kafka-console-producer --broker-list localhost:9092  --topic helloworld
