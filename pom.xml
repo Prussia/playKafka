@@ -18,7 +18,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-
+		<kafka-streams.version>0.11.0.0</kafka-streams.version>
 		<spring-kafka.version>1.2.2.RELEASE</spring-kafka.version>
 	</properties>
 
@@ -44,6 +44,11 @@
 			<artifactId>spring-kafka-test</artifactId>
 			<version>${spring-kafka.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-streams</artifactId>
+			<version>${kafka-streams.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

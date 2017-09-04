@@ -3,9 +3,9 @@ kafka:
   topic:
     helloworld: helloworld.t
     
-spring:
-  kafka:
-    bootstrap-servers: 
-    - localhost:9092
-    
-    clientId: 
+#spring:
+#  kafka:
+#    bootstrap-servers: 
+#    - localhost:9092
+#    
+#    clientId: 
