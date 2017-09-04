@@ -31,13 +31,13 @@ public class TestHelloWorld {
 	@Test
 	public void testAutoCommit() throws Exception {
 		log.info("Start auto");
-		ContainerProperties containerProps = new ContainerProperties("topic1");
+		ContainerProperties containerProps = new ContainerProperties("helloworld");
 		final CountDownLatch latch = new CountDownLatch(4);
 		containerProps.setMessageListener(new MessageListener<Integer, String>() {
 
 			@Override
 			public void onMessage(ConsumerRecord<Integer, String> message) {
-				log.info("received: " + message);
+				log.info("app received: " + message);
 				latch.countDown();
 			}
 
@@ -47,12 +47,17 @@ public class TestHelloWorld {
 		container.start();
 		Thread.sleep(1000); // wait a bit for the container to start
 		KafkaTemplate<Integer, String> template = createTemplate();
-		String topic1 = "topic1";
+		String topic1 = "helloworld";
 		template.setDefaultTopic(topic1);
+		
 		template.sendDefault(0, "foo");
 		template.sendDefault(1, "bar");
 		template.sendDefault(2, "baz");
 		template.sendDefault(3, "qux");
+		
+		template.send("helloworld", 4, "afsdafafasfaf");
+		
+		
 		template.flush();
 		Assert.assertTrue(latch.await(60, TimeUnit.SECONDS));
 		container.stop();
