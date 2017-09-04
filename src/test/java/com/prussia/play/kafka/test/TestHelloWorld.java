@@ -50,9 +50,9 @@ public class TestHelloWorld {
 		String topic1 = "topic1";
 		template.setDefaultTopic(topic1);
 		template.sendDefault(0, "foo");
-		template.sendDefault(2, "bar");
-		template.sendDefault(0, "baz");
-		template.sendDefault(2, "qux");
+		template.sendDefault(1, "bar");
+		template.sendDefault(2, "baz");
+		template.sendDefault(3, "qux");
 		template.flush();
 		Assert.assertTrue(latch.await(60, TimeUnit.SECONDS));
 		container.stop();
