@@ -1,5 +1,10 @@
 package com.prussia.play.kafka.test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.springframework.kafka.test.hamcrest.KafkaMatchers.hasKey;
+import static org.springframework.kafka.test.hamcrest.KafkaMatchers.hasPartition;
+import static org.springframework.kafka.test.hamcrest.KafkaMatchers.hasValue;
+
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -52,16 +57,16 @@ public class KafkaTemplateTests {
 	        KafkaTemplate<Integer, String> template = new KafkaTemplate<>(pf);
 	        template.setDefaultTopic(TEMPLATE_TOPIC);
 	        template.sendDefault("foo");
-//	        assertThat(records.poll(10, TimeUnit.SECONDS), hasValue("foo"));
+	        assertThat(records.poll(10, TimeUnit.SECONDS), hasValue("foo"));
 	        template.sendDefault(0, 2, "bar");
 	        ConsumerRecord<Integer, String> received = records.poll(10, TimeUnit.SECONDS);
-//	        assertThat(received, hasKey(2));
-//	        assertThat(received, hasPartition(0));
-//	        assertThat(received, hasValue("bar"));
+	        assertThat(received, hasKey(2));
+	        assertThat(received, hasPartition(0));
+	        assertThat(received, hasValue("bar"));
 	        template.send(TEMPLATE_TOPIC, 0, 2, "baz");
 	        received = records.poll(10, TimeUnit.SECONDS);
-//	        assertThat(received, hasKey(2));
-//	        assertThat(received, hasPartition(0));
-//	        assertThat(received, hasValue("baz"));
+	        assertThat(received, hasKey(2));
+	        assertThat(received, hasPartition(0));
+	        assertThat(received, hasValue("baz"));
 	    }
 }
