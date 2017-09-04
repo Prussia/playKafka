@@ -11,13 +11,13 @@ import org.apache.kafka.streams.kstream.KStreamBuilder;
 import org.apache.kafka.streams.kstream.KTable;
 
 public class WordCountApplication {
-		 
+
 	    public static void main(final String[] args) throws Exception {
 	        Properties config = new Properties();
 	        config.put(StreamsConfig.APPLICATION_ID_CONFIG, "wordcount-application");
-	        config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka-broker1:9092");
-	        config.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
-	        config.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
+	        config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+	        config.put(StreamsConfig.KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
+	        config.put(StreamsConfig.VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
 	 
 	        KStreamBuilder builder = new KStreamBuilder();
 	        KStream<String, String> textLines = builder.stream("TextLinesTopic");

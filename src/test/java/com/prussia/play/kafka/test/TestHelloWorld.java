@@ -31,7 +31,7 @@ public class TestHelloWorld {
 	@Test
 	public void testAutoCommit() throws Exception {
 		log.info("Start auto");
-		ContainerProperties containerProps = new ContainerProperties("topic1", "topic2");
+		ContainerProperties containerProps = new ContainerProperties("topic1");
 		final CountDownLatch latch = new CountDownLatch(4);
 		containerProps.setMessageListener(new MessageListener<Integer, String>() {
 
