@@ -80,7 +80,7 @@ public class TestHelloWorld {
 
 	private Map<String, Object> consumerProps() {
 		Map<String, Object> props = new HashMap<>();
-		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "insight-platform-cdh-slave1.eastus.cloudapp.azure.com:9092");
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 		String group = "prussia"; // should be a static value
 		props.put(ConsumerConfig.GROUP_ID_CONFIG, group);
 		props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
@@ -93,7 +93,7 @@ public class TestHelloWorld {
 
 	private Map<String, Object> senderProps() {
 		Map<String, Object> props = new HashMap<>();
-		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "insight-platform-cdh-slave1.eastus.cloudapp.azure.com:9092");
+		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 		props.put(ProducerConfig.RETRIES_CONFIG, 0);
 		props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
 		props.put(ProducerConfig.LINGER_MS_CONFIG, 1);
