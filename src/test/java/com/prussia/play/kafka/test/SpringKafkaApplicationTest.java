@@ -22,7 +22,7 @@ import com.prussia.play.kafka.Sender;
 @SpringBootTest
 public class SpringKafkaApplicationTest {
 
-  private static String HELLOWORLD_TOPIC = "helloworld";
+  private static String HELLOWORLD_TOPIC = "helloworld1";
 
   @Autowired
   private Sender sender;
