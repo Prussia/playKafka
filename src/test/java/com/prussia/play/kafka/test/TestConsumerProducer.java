@@ -26,7 +26,7 @@ import org.springframework.kafka.listener.config.ContainerProperties;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestHelloWorld {
+public class TestConsumerProducer {
 	
 	private String bootstrapServers;
 	
