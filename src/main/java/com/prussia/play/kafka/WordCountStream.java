@@ -14,6 +14,7 @@ import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.KStreamBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component("wordCountStream")
@@ -22,8 +23,8 @@ public class WordCountStream {
 	private String topic = "lines";
 	private KafkaStreams streams;
 	
-	private String bootstrapServers = "localhost:9092";
-	private String zookeeper = "localhost:2181";
+	@Value("${kafka.bootstrap-servers}")
+	private String bootstrapServers;
 
 	@PostConstruct
 	public void runStream() {
@@ -34,7 +35,6 @@ public class WordCountStream {
 		config.put(StreamsConfig.KEY_SERDE_CLASS_CONFIG, stringSerde.getClass().getName());
 		config.put(StreamsConfig.VALUE_SERDE_CLASS_CONFIG, stringSerde.getClass().getName());
 		config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-		config.put(StreamsConfig.ZOOKEEPER_CONNECT_CONFIG, zookeeper);
 
 		config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
@@ -53,4 +53,6 @@ public class WordCountStream {
 	public void closeStream() {
 		streams.close();
 	}
+	
+	
 }
