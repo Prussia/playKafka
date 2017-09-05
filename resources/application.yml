@@ -1,7 +1,9 @@
 kafka:
   bootstrap-servers: localhost:9092
   topic:
-    helloworld: helloworld.t
+    helloworld: helloworld1
+    inputstream: streams-wordcount-input
+    outputstream: streams-wordcount-output
     
 #spring:
 #  kafka:
