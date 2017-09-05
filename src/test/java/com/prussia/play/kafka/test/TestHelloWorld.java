@@ -31,7 +31,7 @@ public class TestHelloWorld {
 	@Test
 	public void testAutoCommit() throws Exception {
 		log.info("Start auto");
-		ContainerProperties containerProps = new ContainerProperties("helloworld");
+		ContainerProperties containerProps = new ContainerProperties("helloworld1");
 		final CountDownLatch latch = new CountDownLatch(4);
 		containerProps.setMessageListener(new MessageListener<Integer, String>() {
 
@@ -47,15 +47,15 @@ public class TestHelloWorld {
 		container.start();
 		Thread.sleep(1000); // wait a bit for the container to start
 		KafkaTemplate<Integer, String> template = createTemplate();
-		String topic1 = "helloworld";
+		String topic1 = "helloworld1";
 		template.setDefaultTopic(topic1);
 		
-		template.sendDefault(0, "foo");
-		template.sendDefault(1, "bar");
-		template.sendDefault(2, "baz");
-		template.sendDefault(3, "qux");
+		template.sendDefault(0, "foo0");
+		template.sendDefault(1, "bar1");
+		template.sendDefault(2, "baz2");
+		template.sendDefault(3, "qux3");
 		
-		template.send("helloworld", 4, "afsdafafasfaf");
+//		template.send("helloworld", 4, "afsdafafasfaf");
 		
 		
 		template.flush();
@@ -82,8 +82,8 @@ public class TestHelloWorld {
 
 	private Map<String, Object> consumerProps() {
 		Map<String, Object> props = new HashMap<>();
-		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-		Object group = UUID.randomUUID().toString();
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "insight-platform-cdh-slave1.eastus.cloudapp.azure.com:9092");
+		String group = "prussia"; // should be a static value
 		props.put(ConsumerConfig.GROUP_ID_CONFIG, group);
 		props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
 		props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
@@ -95,7 +95,7 @@ public class TestHelloWorld {
 
 	private Map<String, Object> senderProps() {
 		Map<String, Object> props = new HashMap<>();
-		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "insight-platform-cdh-slave1.eastus.cloudapp.azure.com:9092");
 		props.put(ProducerConfig.RETRIES_CONFIG, 0);
 		props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
 		props.put(ProducerConfig.LINGER_MS_CONFIG, 1);
