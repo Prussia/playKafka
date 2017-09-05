@@ -20,7 +20,10 @@ import org.springframework.stereotype.Component;
 @Component("wordCountStream")
 public class WordCountStream {
 
-	private String topic = "streams-wordcount-input";
+	@Value("${kafka.topic.inputstream}")
+	private String inputTopic;
+	@Value("${kafka.topic.outputstream}")
+	private String outputTopic;
 	private KafkaStreams streams;
 
 	@Value("${kafka.bootstrap-servers}")
@@ -40,10 +43,10 @@ public class WordCountStream {
 
 		Pattern pattern = Pattern.compile("\\W+", Pattern.UNICODE_CHARACTER_CLASS);
 		KStreamBuilder builder = new KStreamBuilder();
-		builder.stream(stringSerde, stringSerde, topic)
+		builder.stream(stringSerde, stringSerde, inputTopic)
 				.flatMapValues(value -> Arrays.asList(pattern.split(value.toLowerCase())))
 				.filter((key, value) -> value.trim().length() > 0).map((key, value) -> new KeyValue<>(value, value))
-				.groupByKey().count("counts").toStream().to(stringSerde, Serdes.Long(), "streams-wordcount-output");
+				.groupByKey().count("counts").toStream().to(stringSerde, Serdes.Long(), outputTopic);
 
 		streams = new KafkaStreams(builder, config);
 		streams.start();
