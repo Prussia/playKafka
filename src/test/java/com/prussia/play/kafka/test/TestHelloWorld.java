@@ -2,7 +2,6 @@ package com.prussia.play.kafka.test;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +13,7 @@ import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -27,6 +27,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class TestHelloWorld {
+	
+	private String bootstrapServers;
+	
+	@Before
+	public void init(){
+		this.bootstrapServers = "localhost:9092";
+	}
 
 	@Test
 	public void testAutoCommit() throws Exception {
@@ -38,8 +45,11 @@ public class TestHelloWorld {
 
 			@Override
 			public void onMessage(ConsumerRecord<Integer, String> message) {
-				log.info(latch.getCount() + ". app received: " + message);
+				log.info("onMessage entry");
+				log.warn(message.offset() + ". app received: " + message);
 				latch.countDown();
+				
+				log.warn("latch count = " + latch.getCount());
 			}
 
 		});
@@ -47,20 +57,24 @@ public class TestHelloWorld {
 		container.setBeanName("testAuto");
 		container.start();
 		Thread.sleep(1000); // wait a bit for the container to start
+		sendMessagesToTopic(topic1);
+		Assert.assertTrue(latch.await(20, TimeUnit.SECONDS));
+		container.stop();
+		log.info("Stop auto");
+
+	}
+
+	private void sendMessagesToTopic(String topic1) {
 		KafkaTemplate<Integer, String> template = createTemplate();
 		
 		template.setDefaultTopic(topic1);
 		
-		template.sendDefault(0, "foo0");
-		template.sendDefault(1, "bar1");
-		template.sendDefault(2, "baz2");
-		template.sendDefault(3, "qux3");
+		template.sendDefault(0, "foo120");
+		template.sendDefault(1, "bar121");
+		template.sendDefault(2, "baz122");
+		template.sendDefault(3, "qux123");
 		
 		template.flush();
-		Assert.assertTrue(latch.await(60, TimeUnit.SECONDS));
-		container.stop();
-		log.info("Stop auto");
-
 	}
 
 	private KafkaMessageListenerContainer<Integer, String> createContainer(ContainerProperties containerProps) {
@@ -80,7 +94,7 @@ public class TestHelloWorld {
 
 	private Map<String, Object> consumerProps() {
 		Map<String, Object> props = new HashMap<>();
-		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		String group = "prussia"; // should be a static value
 		props.put(ConsumerConfig.GROUP_ID_CONFIG, group);
 		props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
@@ -93,7 +107,7 @@ public class TestHelloWorld {
 
 	private Map<String, Object> senderProps() {
 		Map<String, Object> props = new HashMap<>();
-		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		props.put(ProducerConfig.RETRIES_CONFIG, 0);
 		props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
 		props.put(ProducerConfig.LINGER_MS_CONFIG, 1);
