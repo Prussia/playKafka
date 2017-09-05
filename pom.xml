@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.prussia.play.kafka</groupId>
-	<artifactId>spring-kafka-helloworld</artifactId>
+	<artifactId>playKafka</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>spring-kafka-helloworld</name>
+	<name>playKafka</name>
 	<description>Spring Kafka - Consumer Producer Example</description>
 
 	<parent>
