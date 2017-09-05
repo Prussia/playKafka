@@ -2,7 +2,6 @@ package com.prussia.play.kafka;
 
 import java.util.Arrays;
 import java.util.Properties;
-import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -11,7 +10,6 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
-import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.ForeachAction;
 import org.apache.kafka.streams.kstream.KStream;
@@ -47,7 +45,6 @@ public class WordCountStream {
 		config.put(StreamsConfig.VALUE_SERDE_CLASS_CONFIG, stringSerde.getClass().getName());
 		config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
-		Pattern pattern = Pattern.compile("\\W+", Pattern.UNICODE_CHARACTER_CLASS);
 		KStreamBuilder builder = new KStreamBuilder();
 
 		KStream<String, String> textLines = builder.stream(stringSerde, stringSerde, inputTopic);
@@ -59,10 +56,10 @@ public class WordCountStream {
 				}
 			});
 		}
-		KTable<String, Long> wordCounts = textLines.flatMapValues(value -> Arrays.asList(pattern.split(value.toLowerCase())))
-				.filter((key, value) -> value.trim().length() > 0).map((key, value) -> new KeyValue<>(value, value))
-				.groupByKey().count("counts");
-				
+		KTable<String, Long> wordCounts = textLines
+				.flatMapValues(textLine -> Arrays.asList(textLine.toLowerCase().split("\\W+")))
+				.groupBy((key, word) -> word).count("Counts");
+
 		wordCounts.to(stringSerde, Serdes.Long(), outputTopic);
 
 		streams = new KafkaStreams(builder, config);
