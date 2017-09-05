@@ -20,32 +20,32 @@ import org.springframework.stereotype.Component;
 @Component("wordCountStream")
 public class WordCountStream {
 
-	private String topic = "lines";
+	private String topic = "streams-wordcount-input";
 	private KafkaStreams streams;
-	
+
 	@Value("${kafka.bootstrap-servers}")
 	private String bootstrapServers;
+	private Serde<String> stringSerde;
 
 	@PostConstruct
 	public void runStream() {
-		Serde<String> stringSerde = Serdes.String();
+		stringSerde = Serdes.String();
 
 		Properties config = new Properties();
 		config.put(StreamsConfig.APPLICATION_ID_CONFIG, "kafka-streams-example");
+		config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		config.put(StreamsConfig.KEY_SERDE_CLASS_CONFIG, stringSerde.getClass().getName());
 		config.put(StreamsConfig.VALUE_SERDE_CLASS_CONFIG, stringSerde.getClass().getName());
-		config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-
 		config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
 		Pattern pattern = Pattern.compile("\\W+", Pattern.UNICODE_CHARACTER_CLASS);
-		KStreamBuilder wordLines = new KStreamBuilder();
-		wordLines.stream(stringSerde, stringSerde, topic)
+		KStreamBuilder builder = new KStreamBuilder();
+		builder.stream(stringSerde, stringSerde, topic)
 				.flatMapValues(value -> Arrays.asList(pattern.split(value.toLowerCase())))
 				.filter((key, value) -> value.trim().length() > 0).map((key, value) -> new KeyValue<>(value, value))
-				.groupByKey().count("counts").toStream().to(stringSerde, Serdes.Long(), "words-with-counts");
+				.groupByKey().count("counts").toStream().to(stringSerde, Serdes.Long(), "streams-wordcount-output");
 
-		streams = new KafkaStreams(wordLines, config);
+		streams = new KafkaStreams(builder, config);
 		streams.start();
 	}
 
@@ -53,6 +53,5 @@ public class WordCountStream {
 	public void closeStream() {
 		streams.close();
 	}
-	
-	
+
 }
