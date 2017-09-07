@@ -5,3 +5,4 @@
 ### [Samples](https://github.com/spring-cloud/spring-cloud-stream-samples)
 
 ### [spring-cloud-stream/docs/Chelsea.SR2](https://docs.spring.io/spring-cloud-stream/docs/Chelsea.SR2/reference/htmlsingle/index.html#_apache_kafka_binder_overview)
+### [Chelsea.SR2 Released](https://spring.io/blog/2017/05/17/spring-cloud-stream-chelsea-sr2-released)
