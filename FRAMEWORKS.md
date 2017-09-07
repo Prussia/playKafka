@@ -10,3 +10,5 @@
 ### [Chelsea.SR2 Released](https://spring.io/blog/2017/05/17/spring-cloud-stream-chelsea-sr2-released)
 
 #### [mbogoevici/spring-cloud-stream-binder-kstream](https://github.com/mbogoevici/spring-cloud-stream-binder-kstream)
+
+### [Kafka Streams - how does it fit the stream processing landscape?](https://softwaremill.com/kafka-streams-how-does-it-fit-stream-landscape/)
