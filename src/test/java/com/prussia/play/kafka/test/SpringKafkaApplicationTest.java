@@ -15,8 +15,8 @@ import org.springframework.kafka.test.rule.KafkaEmbedded;
 import org.springframework.kafka.test.utils.ContainerTestUtils;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.prussia.play.kafka.Receiver;
-import com.prussia.play.kafka.Sender;
+import com.prussia.play.kafka.hello.Receiver;
+import com.prussia.play.kafka.hello.Sender;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
