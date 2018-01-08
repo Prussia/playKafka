@@ -18,11 +18,18 @@
 ```
 ./kafka-run-class kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic helloworld --time -1
 | while IFS=: read topic_name partition_id number; do echo "$number"; done
-
-
+```
+```
 ./kafka-console-producer --broker-list localhost:9092  --topic helloworld
-
-
+```
+```
 ./kafka-console-consumer --bootstrap-server localhost:9092 --from-beginning --topic helloworld
+
+```
+
+```
+./kafka-console-producer --broker-list localhost:9092 --topic $topic --property "parse.key=true" --property "key.separator=:"
+
+key1:value1
 
 ```

@@ -1,4 +1,4 @@
-package com.prussia.play.kafka;
+package com.prussia.play.kafka.hello;
 
 import java.util.concurrent.CountDownLatch;
 

@@ -1,4 +1,4 @@
-package com.prussia.play.kafka;
+package com.prussia.play.kafka.hello;
 
 import lombok.extern.slf4j.Slf4j;
 

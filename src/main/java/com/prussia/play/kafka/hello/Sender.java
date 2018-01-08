@@ -1,4 +1,4 @@
-package com.prussia.play.kafka;
+package com.prussia.play.kafka.hello;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
