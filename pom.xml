@@ -19,8 +19,8 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<skipTests>true</skipTests>
-		<kafka-streams.version>0.11.0.1</kafka-streams.version>
-		<spring-kafka.version>2.1.0.RELEASE</spring-kafka.version>
+		<kafka-streams.version>0.11.0.0</kafka-streams.version>
+		<spring-kafka.version>2.0.2.RELEASE</spring-kafka.version>
 	</properties>
 
 	<dependencies>
