@@ -26,6 +26,9 @@ public class SenderConfig {
 		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+		props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
+		props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "gzip");
+		props.put(ProducerConfig.LINGER_MS_CONFIG, 5);
 
 		return props;
 	}
