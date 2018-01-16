@@ -5,7 +5,6 @@
 ## [Configuring Kafka for Performance and Resource Management](https://www.cloudera.com/documentation/kafka/latest/topics/kafka_performance.html)
 
 ### [Tuning Kafka Producers](https://www.cloudera.com/documentation/kafka/latest/topics/kafka_performance.html#kafka_performance_tuning_producers)
-    tune the parameters
     ProducerConfig.BATCH_SIZE_CONFIG
     ProducerConfig.LINGER_MS_CONFIG
     ProducerConfig.COMPRESSION_TYPE_CONFIG
